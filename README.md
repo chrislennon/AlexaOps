@@ -20,4 +20,12 @@ This skill supports the following actions:
 
 # Setup
 
-TODO - combined with the presentation
+TODO - dependency and setup instructions (distill presentation into instructions)
+
+# Presentation
+
+The initial revision of the presentation is available [here](https://drive.google.com/file/d/1OmNydd2UFhGdsSoFtVoex12HVjk6y3Qz/view?usp=sharing)
+
+TODO:
+- feedback from [Session 1](https://www.meetup.com/DevOpsAmsterdam/events/245864025/)
+- convert over to (GitHub Pages deployable) web based presentation 
