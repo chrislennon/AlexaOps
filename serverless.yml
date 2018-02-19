@@ -15,7 +15,7 @@ plugins:
 
 functions:
   alexaInstanceControl:
-    handler: lambda_function.handler
+    handler: main.handler
     events:
       - alexaSkill
 
