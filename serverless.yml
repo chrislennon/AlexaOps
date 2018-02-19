@@ -10,11 +10,19 @@ provider:
 #   exclude:
 #     - test.py
 
+plugins:
+  - serverless-python-requirements
+
 functions:
   alexaInstanceControl:
-    handler: lambda_function.lambda_handler
+    handler: lambda_function.handler
     events:
       - alexaSkill
 
-plugins:
-  - serverless-python-requirements
+Outputs:
+    FunctionArn:
+      Description: The ARN for the Lambda function
+      Value:
+        "Fn::GetAtt": [ alexaInstanceControl, Arn ]
+      Export:
+        Name: ${self:service}:${opt:stage}:FunctionArn
