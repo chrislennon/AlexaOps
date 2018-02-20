@@ -1,0 +1,271 @@
+{
+  "languageModel": {
+    "types": [
+      {
+        "name": "Environments",
+        "values": [
+          {
+            "id": "DEV",
+            "name": {
+              "value": "Development",
+              "synonyms": [
+                "dev",
+                "development"
+              ]
+            }
+          },
+          {
+            "id": "PROD",
+            "name": {
+              "value": "Production",
+              "synonyms": [
+                "prod",
+                "production"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Service",
+        "values": [
+          {
+            "id": "BACK",
+            "name": {
+              "value": "Backend",
+              "synonyms": [
+                "backend"
+              ]
+            }
+          },
+          {
+            "id": "FRONT",
+            "name": {
+              "value": "Frontend",
+              "synonyms": [
+                "frontend",
+                "webserver"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Status",
+        "values": [
+          {
+            "id": "START",
+            "name": {
+              "value": "start",
+              "synonyms": [
+                "turn on"
+              ]
+            }
+          },
+          {
+            "id": "STOP",
+            "name": {
+              "value": "stop",
+              "synonyms": [
+                "terminate",
+                "turn off"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "intents": [
+      {
+        "name": "AMAZON.CancelIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.HelpIntent",
+        "samples": []
+      },
+      {
+        "name": "AMAZON.StopIntent",
+        "samples": []
+      },
+      {
+        "name": "GetBilling",
+        "samples": [
+          "what is my AWS bill",
+          "tell me my AWS bill",
+          "what is my amazon bill",
+          "tell me my amazon bill"
+        ],
+        "slots": []
+      },
+      {
+        "name": "GetServices",
+        "samples": [
+          "How many {Label} servers are running",
+          "list the {Label} servers that are running"
+        ],
+        "slots": [
+          {
+            "name": "Label",
+            "type": "Environments"
+          }
+        ]
+      },
+      {
+        "name": "ManageServices",
+        "samples": [
+          "{State} all {Label} servers"
+        ],
+        "slots": [
+          {
+            "name": "State",
+            "type": "Status"
+          },
+          {
+            "name": "Label",
+            "type": "Environments"
+          }
+        ]
+      },
+      {
+        "name": "ScaleServices",
+        "samples": [
+          "scale {Type} to {InstanceNumber}",
+          "scale {Type} to {InstanceNumber} instances",
+          "scale {Type} to {InstanceNumber} servers",
+          "set {Type} to {InstanceNumber} instances",
+          "scale the {Type} to {InstanceNumber} instances",
+          "scale the {Type} to {InstanceNumber} servers"
+        ],
+        "slots": [
+          {
+            "name": "Type",
+            "type": "Service"
+          },
+          {
+            "name": "InstanceNumber",
+            "type": "AMAZON.NUMBER"
+          }
+        ]
+      }
+    ],
+    "invocationName": "cloud control"
+  },
+  "prompts": [
+    {
+      "id": "Elicit.Intent-GetServices.IntentSlot-Label",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "What type of servers did you mean?"
+        }
+      ]
+    },
+    {
+      "id": "Elicit.Intent-ManageServices.IntentSlot-State",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "what status would you like me to do to the servers?"
+        }
+      ]
+    },
+    {
+      "id": "Elicit.Intent-ManageServices.IntentSlot-Label",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "what environment would you like to affect?"
+        }
+      ]
+    },
+    {
+      "id": "Elicit.Intent-ScaleServices.IntentSlot-Type",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "What service did you want to scale?"
+        }
+      ]
+    },
+    {
+      "id": "Elicit.Intent-ScaleServices.IntentSlot-InstanceNumber",
+      "variations": [
+        {
+          "type": "PlainText",
+          "value": "How many instances should I scale to?"
+        }
+      ]
+    }
+  ],
+  "dialog": {
+    "intents": [
+      {
+        "name": "GetServices",
+        "confirmationRequired": false,
+        "prompts": {},
+        "slots": [
+          {
+            "name": "Label",
+            "type": "Environments",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicitation": "Elicit.Intent-GetServices.IntentSlot-Label"
+            }
+          }
+        ]
+      },
+      {
+        "name": "ManageServices",
+        "confirmationRequired": false,
+        "prompts": {},
+        "slots": [
+          {
+            "name": "State",
+            "type": "Status",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicitation": "Elicit.Intent-ManageServices.IntentSlot-State"
+            }
+          },
+          {
+            "name": "Label",
+            "type": "Environments",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicitation": "Elicit.Intent-ManageServices.IntentSlot-Label"
+            }
+          }
+        ]
+      },
+      {
+        "name": "ScaleServices",
+        "confirmationRequired": false,
+        "prompts": {},
+        "slots": [
+          {
+            "name": "Type",
+            "type": "Service",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicitation": "Elicit.Intent-ScaleServices.IntentSlot-Type"
+            }
+          },
+          {
+            "name": "InstanceNumber",
+            "type": "AMAZON.NUMBER",
+            "elicitationRequired": true,
+            "confirmationRequired": false,
+            "prompts": {
+              "elicitation": "Elicit.Intent-ScaleServices.IntentSlot-InstanceNumber"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
