@@ -20,7 +20,16 @@ This skill supports the following actions:
 
 # Setup
 
-TODO - dependency and setup instructions (distill presentation into instructions)
+Steps are covered in the 'AlexaOps' (final) section of the [presentation](https://chrislennon.github.io/AlexaOps-Presentation/) however are also covered below in less detail.
+
+- Create a new skill in the [Alexa Developer console](https://developer.amazon.com/edw/home.html#/).
+- Take note of the skill id in the created skill.
+- Create intents, slots and utterances - `alexa_template.json` can be copied into the code editor.
+- Change `ALEXA_SKILL_ID` in the `serverless.yml` to the above value.
+- Run `serverless deploy`
+- Take note of the created function's ARN.
+- In the Alexa developer console add the lambda endpoint ARN.
+- Check the skill is enabled within your account in the [Alexa App](https://alexa.amazon.com/)
 
 # Presentation
 
