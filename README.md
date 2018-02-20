@@ -3,7 +3,7 @@ _Why? cause why not?!_
 
 # Intro
 
-This repo is an example implementation backed by a presentation. The idea is to create an Alexa skill, backed by AWS Lambda to control various operations.
+This repo is an example implementation backed by a [presentation](https://chrislennon.github.io/AlexaOps-Presentation/). The idea is to create an Alexa skill, backed by AWS Lambda to control various operations on the AWS platform.
 
 # Usage
 
@@ -24,8 +24,4 @@ TODO - dependency and setup instructions (distill presentation into instructions
 
 # Presentation
 
-The initial revision of the presentation is available [here](https://drive.google.com/file/d/1OmNydd2UFhGdsSoFtVoex12HVjk6y3Qz/view?usp=sharing)
-
-TODO:
-- feedback from [Session 1](https://www.meetup.com/DevOpsAmsterdam/events/245864025/)
-- convert over to (GitHub Pages deployable) web based presentation 
+The initial revision of the presentation is available on [GitHub pages](https://chrislennon.github.io/AlexaOps-Presentation/)

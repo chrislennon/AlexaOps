@@ -4,7 +4,8 @@ import os
 from ec2 import get_service_status, set_service_status, set_autoscaling_instances
 from cloudwatch import get_billing
 
-def lambda_handler(event, context):
+
+def handler(event, context):
     if (event["session"]["application"]["applicationId"] !=
             os.environ.get('ALEXA_SKILL_ID')):
         raise ValueError("Invalid Application ID")
@@ -19,11 +20,14 @@ def lambda_handler(event, context):
     elif event["request"]["type"] == "SessionEndedRequest":
         return on_session_ended(event["request"], event["session"])
 
+
 def on_session_started(session_started_request, session):
     print("Starting new session.")
 
+
 def on_launch(launch_request, session):
     return get_welcome_response()
+
 
 def on_intent(intent_request, session):
     intent = intent_request["intent"]
@@ -35,39 +39,28 @@ def on_intent(intent_request, session):
     should_end_session = True
 
     if intent_name == "GetServices":
-        card_title = card_title + " Server Status"
-        
         speech_output = get_service_status(intent["slots"])
 
         return build_response(session_attributes, build_speechlet_response(
-        card_title, speech_output, reprompt_text, should_end_session))
+            card_title, speech_output, reprompt_text, should_end_session))
 
     elif intent_name == "ManageServices":
-        card_title = card_title + " Server Control"
-        
         speech_output = set_service_status(intent["slots"])
 
         return build_response(session_attributes, build_speechlet_response(
-        card_title, speech_output, reprompt_text, should_end_session))
+            card_title, speech_output, reprompt_text, should_end_session))
 
     elif intent_name == "ScaleServices":
-        card_title = card_title + " Scaling Control"
-        
         speech_output = set_autoscaling_instances(intent["slots"])
 
         return build_response(session_attributes, build_speechlet_response(
-        card_title, speech_output, reprompt_text, should_end_session))
+            card_title, speech_output, reprompt_text, should_end_session))
 
     elif intent_name == "GetBilling":
-        session_attributes = {}
-        card_title = card_title + " Billing Info"
-        reprompt_text = ""
-        should_end_session = True
-        
         speech_output = get_billing()
 
         return build_response(session_attributes, build_speechlet_response(
-        card_title, speech_output, reprompt_text, should_end_session))
+            card_title, speech_output, reprompt_text, should_end_session))
 
     elif intent_name == "AMAZON.HelpIntent":
         return get_welcome_response()
@@ -78,18 +71,21 @@ def on_intent(intent_request, session):
     else:
         raise ValueError("Invalid intent")
 
+
 def on_session_ended(session_ended_request, session):
     print("Ending session.")
     # Cleanup goes here...
 
+
 def handle_session_end_request():
-    card_title = "Alexa Cloud Control - Thanks"
+    card_title = "Alexa Cloud Control"
     speech_output = "Thank you for using the Alexa Cloud Control skill. See you next time!"
     should_end_session = True
 
-    speech_output = '<speak>'+speech_output+'</speak>'
+    speech_output = '<speak>' + speech_output + '</speak>'
 
     return build_response({}, build_speechlet_response(card_title, speech_output, None, should_end_session))
+
 
 def get_welcome_response():
     session_attributes = {}
@@ -103,14 +99,13 @@ def get_welcome_response():
                     "for example 'how many development servers are running'."
     should_end_session = False
 
-    speech_output = '<speak>'+speech_output+'</speak>'
+    speech_output = '<speak>' + speech_output + '</speak>'
 
     return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
 
 
 def build_speechlet_response(title, output, reprompt_text, should_end_session):
-    
     # Strip any SSML from card output
     regex = re.compile(r"\<[^>]*\>")
     card_output = re.sub(regex, '', output)
@@ -134,29 +129,10 @@ def build_speechlet_response(title, output, reprompt_text, should_end_session):
         "shouldEndSession": should_end_session
     }
 
+
 def build_response(session_attributes, speechlet_response):
     return {
         "version": "1.0",
         "sessionAttributes": session_attributes,
         "response": speechlet_response
     }
-
-if __name__ =="__main__":
-    import json
-    import inquirer # TODO DEPS
-    from pprint import pprint
-    print("Running from the CLI")
-    with open('example_lambda_events.json') as data_file:    
-        data = json.load(data_file)
-
-    questions = [
-    inquirer.List('event',
-                    message="What event should we run?",
-                    choices=['LaunchRequest', 'GetServicesIntent', 'ManageServicesIntent', 'ScaleServicesIntent', 'GetBillingIntent'],
-                ),
-    ]
-    answer = inquirer.prompt(questions)
-
-    os.environ["ALEXA_SKILL_ID"] = data[answer["event"]]["session"]["application"]["applicationId"]
-    output = lambda_handler(data[answer["event"]], None)
-    print(output)

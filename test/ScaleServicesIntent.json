@@ -1,0 +1,51 @@
+{
+    "session": {
+        "sessionId": "SessionId.<session_id>",
+        "application": {
+        "applicationId": "amzn1.ask.skill.<skill_id>"
+        },
+        "attributes": {},
+        "user": {
+        "userId": "amzn1.ask.account.XXXX"
+        },
+        "new": true
+    },
+    "request": {
+        "type": "IntentRequest",
+        "requestId": "EdwRequestId.<request_id>",
+        "timestamp": "2018-01-09T22:00:00Z",
+        "intent": {
+        "name": "ScaleServices",
+        "slots": {
+            "Type": {
+            "name": "Type",
+            "value": "backend",
+            "resolutions": {
+                "resolutionsPerAuthority": [
+                {
+                    "authority": "amzn1.er-authority.echo-sdk.<skill_id>.MEDIA_TYPE",
+                    "status": {
+                    "code": "ER_SUCCESS_MATCH"
+                    },
+                    "values": [
+                    {
+                        "value": {
+                        "name": "Backend",
+                        "id": "DEV"
+                        }
+                    }
+                    ]
+                }
+                ]
+            }
+            },
+            "InstanceNmber": {
+            "name": "InstanceNmber",
+            "value": "1"
+            }
+        }
+        },
+        "locale": "en-US"
+    },
+    "version": "1.0"
+}

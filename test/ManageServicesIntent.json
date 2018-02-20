@@ -1,0 +1,69 @@
+{
+    "session": {
+        "sessionId": "SessionId.<session_id>",
+        "application": {
+        "applicationId": "amzn1.ask.skill.<skill_id>"
+        },
+        "attributes": {},
+        "user": {
+        "userId": "amzn1.ask.account.XXXX"
+        },
+        "new": true
+    },
+    "request": {
+        "type": "IntentRequest",
+        "requestId": "EdwRequestId.<request_id>",
+        "timestamp": "2018-01-09T22:00:00Z",
+        "intent": {
+        "name": "ManageServices",
+        "slots": {
+            "Label": {
+            "name": "Label",
+            "value": "development",
+            "resolutions": {
+                "resolutionsPerAuthority": [
+                {
+                    "authority": "amzn1.er-authority.echo-sdk.<skill_id>.MEDIA_TYPE",
+                    "status": {
+                    "code": "ER_SUCCESS_MATCH"
+                    },
+                    "values": [
+                    {
+                        "value": {
+                        "name": "Development",
+                        "id": "DEV"
+                        }
+                    }
+                    ]
+                }
+                ]
+            }
+            },
+            "State": {
+            "name": "State",
+            "value": "stop",
+            "resolutions": {
+                "resolutionsPerAuthority": [
+                {
+                    "authority": "amzn1.er-authority.echo-sdk.<skill_id>.MEDIA_TYPE",
+                    "status": {
+                    "code": "ER_SUCCESS_MATCH"
+                    },
+                    "values": [
+                    {
+                        "value": {
+                        "name": "stop",
+                        "id": "STOP"
+                        }
+                    }
+                    ]
+                }
+                ]
+            }
+            }
+        }
+        },
+        "locale": "en-US"
+    },
+    "version": "1.0"
+}

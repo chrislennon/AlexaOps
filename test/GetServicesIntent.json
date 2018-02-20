@@ -1,0 +1,63 @@
+{
+    "session": {
+        "new": false,
+        "sessionId": "SessionId.<session_id>",
+        "application": {
+        "applicationId": "amzn1.ask.skill.<skill_id>"
+        },
+        "attributes": {},
+        "user": {
+        "userId": "amzn1.ask.account.XXXX"
+        }
+    },
+    "request": {
+        "type": "IntentRequest",
+        "requestId": "EdwRequestId.<request_id>",
+        "intent": {
+        "name": "GetServices",
+        "slots": {
+            "Label": {
+            "name": "Label",
+            "value": "development",
+            "resolutions": {
+                "resolutionsPerAuthority": [
+                {
+                    "authority": "amzn1.er-authority.echo-sdk.<skill_id>.MEDIA_TYPE",
+                    "status": {
+                    "code": "ER_SUCCESS_MATCH"
+                    },
+                    "values": [
+                    {
+                        "value": {
+                        "name": "Development",
+                        "id": "DEV"
+                        }
+                    }
+                    ]
+                }
+                ]
+            }
+            }
+        }
+        },
+        "locale": "en-US",
+        "timestamp": "2018-01-10T21:45:05Z"
+    },
+    "context": {
+        "AudioPlayer": {
+        "playerActivity": "IDLE"
+        },
+        "System": {
+        "application": {
+            "applicationId": "amzn1.ask.skill.<skill_id>"
+        },
+        "user": {
+            "userId": "amzn1.ask.account.XXXX"
+        },
+        "device": {
+            "supportedInterfaces": {}
+        }
+        }
+    },
+    "version": "1.0"
+}

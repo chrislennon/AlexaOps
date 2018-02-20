@@ -1,7 +1,9 @@
 import boto3
 import datetime
 
-cloudwatchBilling = boto3.client('cloudwatch', region_name='us-east-1') # Billing is only exposed on us-east-1, cause reasons >.>
+# Billing is only exposed on us-east-1
+cloudwatchBilling = boto3.client('cloudwatch', region_name='us-east-1')
+
 
 def get_billing():
 
@@ -22,6 +24,7 @@ def get_billing():
     # Setup the response
     return speech_output
 
+
 def get_metric_details(metrics):
 
     stats = {}
@@ -39,13 +42,13 @@ def get_metric_details(metrics):
             datapoints = metricdata[u'Datapoints']
             datapoints = sorted(datapoints, key=lambda datapoint: datapoint[u'Timestamp'], reverse=True)
             value = datapoints[0][u'Maximum']
-            
+
             # Only show services with cost
             if value > 0:
                 if metricname == "ServiceName":
                     metricname = metric[u'Dimensions'][0].get(u'Value')
 
-                if u'LinkedAccount' not in metric[u'Dimensions']:            
+                if u'LinkedAccount' not in metric[u'Dimensions']:
                     key = "%s" % (metricname)
                     stats[key] = value
                 else:

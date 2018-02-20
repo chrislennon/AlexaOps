@@ -1,0 +1,32 @@
+{
+  "name": "serverless-alexaops",
+  "version": "0.0.1",
+  "description": "A simple serverless alexa intent",
+  "main": "index.js",
+  "scripts": {
+    "test": "python test.py"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrislennon/AlexaOps.git"
+  },
+  "keywords": [
+    "python",
+    "aws",
+    "lambda",
+    "serverless",
+    "alexa"
+  ],
+  "author": "chrislennon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chrislennon/AlexaOps/issues"
+  },
+  "homepage": "https://github.com/chrislennon/AlexaOps#readme",
+  "dependencies": {
+    "serverless-python-requirements": "^2.2.1"
+  },
+  "devDependencies": {
+    "serverless-python-requirements": "^3.3.0"
+  }
+}

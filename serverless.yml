@@ -1,0 +1,93 @@
+service: alexaops
+
+provider:
+  name: aws
+  region: eu-west-1
+  runtime: python3.6
+  memorySize: 128
+  environment:
+    ALEXA_SKILL_ID: amzn1.ask.skill.<skill_id>
+
+# package:
+#   exclude:
+#     - test.py
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+
+plugins:
+  - serverless-python-requirements
+
+functions:
+  alexaInstanceControl:
+    handler: main.handler
+    role: customLambdaRole
+    events:
+      - alexaSkill
+resources:
+  Resources:
+    customLambdaRole:
+      Type: AWS::IAM::Role
+      Properties:
+        Path: /
+        RoleName: CustomLambdaRole
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: AmazonEC2ReadOnlyAccess
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource: 
+                    - 'Fn::Join':
+                      - ':'
+                      -
+                        - 'arn:aws:logs'
+                        - Ref: 'AWS::Region'
+                        - Ref: 'AWS::AccountId'
+                        - 'log-group:/aws/lambda/*:*:*'
+                - Effect: Allow
+                  Action:
+                    - ec2:Describe*
+                    - elasticloadbalancing:Describe*
+                    - cloudwatch:ListMetrics
+                    - cloudwatch:GetMetricStatistics
+                    - cloudwatch:Describe*
+                    - autoscaling:Describe*
+                  Resource: "*"
+          - PolicyName: AWSLambdaBasicExecutionRole
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource: 
+                    - 'Fn::Join':
+                      - ':'
+                      -
+                        - 'arn:aws:logs'
+                        - Ref: 'AWS::Region'
+                        - Ref: 'AWS::AccountId'
+                        - 'log-group:/aws/lambda/*:*:*'
+Outputs:
+    FunctionArn:
+      Description: The ARN for the Lambda function
+      Value:
+        "Fn::GetAtt": [ alexaInstanceControl, Arn ]
+      Export:
+        Name: ${self:service}:${opt:stage}:FunctionArn
